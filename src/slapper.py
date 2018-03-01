@@ -10,29 +10,50 @@
 import subprocess
 import sys
 import os
+import re
+
+from fuzzywuzzy import fuzz
 
 import io_handler as io
 import constants as cnt   # Hehe, get it?
 
 
-# Now, do the checking:
+# Read foul_words
 try:
+  foul_words = io.open_file(cnt.foul_words_path)
+
   # Check all files in the staging-area:
   text = subprocess.check_output(
     [cnt.git_binary_path, "status", "--porcelain", "-uno"],
     stderr=subprocess.STDOUT
   ).decode("utf-8")
+
   file_list = text.splitlines()
 
-  # Check all files:
-  for file_s in file_list:
-    stat = os.stat(file_s[3:])
-    if stat.st_size > (max_file_size*1024):
-      # File is to big, abort the commit:
-      print("'"+file_s[3:]+"' is too huge to be commited!",
-        "("+sizeof_fmt(stat.st_size)+")")
-      sys.exit(1)
-  
+  # Get paths from file_list and go over all files:
+  for fname in [n[3:] for n in file_list]:
+    fcontents = io.open_file(fname)
+
+    # Loop over lines in file
+    for index, line in enumerate(fcontents):
+      for fw in [fw[:len(fw)-1] for fw in foul_words]:
+
+        # If a foul word is in the line
+        if fw in line:
+          io.log(
+            'Foul word \'%s\' found on line %s.' % (fw, index),
+            'ERROR',
+          )
+          sys.exit(1)
+
+        # If a variant of a foul word is in the line
+        elif fuzz.partial_ratio(fw, line) > 90:
+            io.log(
+              'A version of foul word \'%s\' found on line %s.' % (fw, index),
+              'ERROR',
+            )
+            sys.exit(1)
+
   # Everything seams to be okay:
   print("No huge files found.")
   sys.exit(0)
