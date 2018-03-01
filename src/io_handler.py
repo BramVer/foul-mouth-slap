@@ -4,25 +4,9 @@ This file handles the I/O of the script 🤔🤔🤔🤔
 import os
 import json
 
-
-# Writes all output to a file
-def log_to_file(output, write_mode=None, same_line=None, bold=None):
-  try:
-    target_file = 'output_log.txt'
-    write_mode = 'a' if not write_mode else write_mode
-
-    print('\033[1m%s\033[0m' % output if bold else output)
-    with open(target_file, write_mode) as log_file:
-      if not type(output) == str:
-        json.dump(output, log_file)
-      else:
-        log_file.writelines(output)
-
-      if not same_line:
-        log_file.writelines('\n')
-
-  except Exception as e:
-    print('Exception while logging\n\n', str(e))
+# Prints to console
+def log(output, level=None):
+  print('\033[1m%s\033[0m\t%s' % (level, output))
 
 # Appends set of lines to file
 def write_word_to_file(word):
@@ -39,7 +23,7 @@ def write_word_to_file(word):
       'Line: %s\n\nException: %s' % (word, str(e))
     )
 
-# Opens the file, extracts information and calls init func
+# Opens the file, extracts information and returns it as array
 def open_file(file):
   file_data = []
 
