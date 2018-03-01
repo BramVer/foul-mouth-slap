@@ -1,12 +1,12 @@
 '''
-This file handles the I/O of the script 🤔🤔🤔🤔
+This file handles the I/O of the script
 '''
 import os
 import json
 
 # Prints to console
-def log(output, level=None):
-  print('\033[1m%s\033[0m\t%s' % (level, output))
+def log(level, filename, line, felony):
+  print('\033[1m%s\033[0m\t - In file %s: Line: %s - %s' % (level, filename, line, felony))
 
 # Appends set of lines to file
 def write_word_to_file(word):
