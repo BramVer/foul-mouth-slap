@@ -13,10 +13,14 @@ touch ~/.git-templates/hooks/pre-commit
 ```bash
 #!/bin/sh
 
-# Add other post-commit hooks 
+# Add other pre-commit hooks 
 python /PATH/TO/slapper.py
 ```
-5. Set global rule in git to call this on commit in every repository
+5. Make hook executable
+```bash
+sudo chmod u+x ~/.git-templates/hooks/pre-commit
+```
+6. Set global rule in git to call this on commit in every repository
 ```bash
 git config --global core.hooksPath ~/.git-templates/hooks/
 ```
