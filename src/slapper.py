@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
 # TODO:
-# [ ] read all files
+# [x] read all files
+#  - [ ] Look only at the staged files 
+#  - [ ] Look at the file names
 # [x] construct a list of words i use when i have a foul-mouth
-# [ ] set up some rules about other words
-# [ ] detect variants of words
+# [x] set up some rules about other words
+# [x] detect variants of words
 # [ ] write them permanently to list of foul-words.txt
 
 import os
