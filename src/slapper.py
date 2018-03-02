@@ -29,6 +29,7 @@ acceptable_chars = [
   '.',
   '"',
   "'",
+  '`',
 ]
 
 # Prints to console
