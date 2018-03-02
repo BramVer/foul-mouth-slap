@@ -7,25 +7,53 @@
 # [ ] detect variants of words
 # [ ] write them permanently to list of foul-words.txt
 
-import subprocess
-import sys
 import os
 import re
-import collections
+import sys
+import json
+import subprocess
 
 from fuzzywuzzy import fuzz
 
-import io_handler as io
-import constants as cnt   # Hehe, get it?
+
+# Constants
+git_binary_path = "/usr/bin/git"
+foul_words_path = "/home/darm/DEV/foul-mouth-slap/assets/foul-words.txt"
+acceptable_chars = [
+  ' ',
+  '=',
+  '-',
+  '.',
+  '"',
+  "'",
+]
+
+# Prints to console
+def log(level, filename, line, felony):
+  print('\033[1m%s\033[0m \t- In file %s on line: %s \t- %s' % (level, filename, line, felony))
+
+# Opens the file, extracts information and returns it as array
+def open_file(file):
+  file_data = []
+
+  try:
+    with open(file, 'r') as data:
+      file_data = [line for line in data]
+
+  except IOError as e:
+    log_to_file('No file found for path.\n\n' + str(e))
+
+  finally:
+    return file_data
 
 
 # Read foul_words
 try:
-  foul_words = io.open_file(cnt.foul_words_path)
+  foul_words = open_file(foul_words_path)
 
   # Check all files in the staging-area:
   text = subprocess.check_output(
-    [cnt.git_binary_path, "status", "--porcelain", "-uno"],
+    [git_binary_path, "status", "--porcelain", "-uno"],
     stderr=subprocess.STDOUT
   ).decode("utf-8")
 
@@ -33,14 +61,14 @@ try:
 
   # Get paths from file_list and go over all files:
   for fname in [n[3:] for n in file_list]:
-    fcontents = io.open_file(fname)
+    fcontents = open_file(fname)
 
     # Loop over lines in file
     for index, line in enumerate(fcontents):
       for fw in [fw[:len(fw)-1] for fw in foul_words]:
         # If a foul word is in the line
         if fw in line:
-          io.log(
+          log(
             'ERROR',
             fname,
             index,
@@ -50,7 +78,7 @@ try:
 
         # If a variant of a foul word is in the line
         elif fuzz.partial_ratio(fw, line) > 90:
-            io.log(
+            log(
               'ERROR',
               fname,
               index,
@@ -61,9 +89,9 @@ try:
         # If a char is repeated too often
         else:
           for i, w in enumerate(line):
-            if w not in cnt.acceptable_chars and i-2 >= 0:
+            if w not in acceptable_chars and i-2 >= 0:
               if w == line[i-1] and w == line[i-2]:
-                io.log(
+                log(
                   'ERROR',
                   fname,
                   index,
