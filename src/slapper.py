@@ -7,6 +7,7 @@
 # [x] construct a list of words i use when i have a foul-mouth
 # [x] set up some rules about other words
 # [x] detect variants of words
+# [ ] link to github links
 # [ ] write them permanently to list of foul-words.txt
 
 import os
@@ -20,7 +21,7 @@ from fuzzywuzzy import fuzz
 
 # Constants
 git_binary_path = "/usr/bin/git"
-foul_words_path = "/home/darm/DEV/foul-mouth-slap/assets/foul-words.txt"
+foul_words_path = "/home/darm/DEV/foul-mouth-slap/assets/foul-words"
 acceptable_chars = [
   ' ',
   '=',
