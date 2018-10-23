@@ -2,10 +2,17 @@
 
 All input and/or output in the application is defined and handled here.
 '''
+import sys
 import os
 import re
 import toml
 import subprocess
+
+
+def get_absolute_path_for_script():
+  absolute_path = sys.argv[0][:-10]
+
+  return absolute_path
 
 def log_final_verdict(violations):
   print('😱😱😱😤😤 Foul mouthed words found 😤😤😱😱😱')
@@ -111,7 +118,8 @@ def get_config():
   config_dict = {}
 
   try:
-    config_dict = toml.load(os.path.abspath('/home/darm/DEV/foul-mouth-slap/slapper/config.toml'))
+    absolute_path = get_absolute_path_for_script()
+    config_dict = toml.load(os.path.abspath('%s/../config.toml' % absolute_path))
   except Exception as e:
     print("Could not load configuration file")
 
@@ -144,7 +152,8 @@ def get_violations_dict():
   violations_dict = {}
 
   try:
-    violations_dict = toml.load(os.path.abspath('/home/darm/DEV/foul-mouth-slap/slapper/assets/word_list.toml'))
+    absolute_path = get_absolute_path_for_script()
+    violations_dict = toml.load(os.path.abspath('%s/../assets/word_list.toml' % absolute_path))
   except Exception as e:
     print("Could not load violations configuration")
 

@@ -6,9 +6,9 @@ import evaluator
 import io_handler as io
 
 def main():
-  # Dict of status with all new / modified files
-  affected_files = io.get_repository_status()
+
   violations = []
+  affected_files = io.get_repository_status()
 
   for filename in affected_files.get('modified', []):
     file_type = io.get_file_type(filename)
