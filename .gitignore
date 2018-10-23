@@ -38,8 +38,5 @@ Thumbs.db
 
 # CUSTOM #
 ##########
-*.tab
-*.rdf
 *.pyc
-*.nt
-*.txt
+*.toml
