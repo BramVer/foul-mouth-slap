@@ -1,0 +1,11 @@
+[executable]
+  # Only change if script can't execute `git`
+  path_to_git_binary = "git"
+  path_to_word_list = "assets/word_list.toml"
+
+[preferences]
+  # false for warnings, true for blocking
+  strict_blocking = true/false
+
+  [logging]
+    log_to_file = false

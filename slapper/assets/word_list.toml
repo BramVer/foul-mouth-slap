@@ -1,0 +1,30 @@
+# Defines foul chars/words per file type and exceptions.
+title = "List of foul words/acceptable exceptions"
+
+[all]
+  [all.foul]
+    words = [
+      "dink",
+      "kak",
+      "brap",
+      "brrrap",
+      "braapp",
+      "braaap",
+      "pipi",
+      "kaka",
+      "piss",
+      "stront",
+      "kots",
+      "dinkerdink",
+      "ahrsvochtkonzentrat",
+    ]
+    patterns = ["([a-z])\\1{3,}"]
+  [all.acceptable]
+    words = []
+    patterns = []
+
+[css]
+  [css.foul]
+    words = ["test"]
+  [css.acceptable]
+    patterns = ["#[a-z0-9]*"]

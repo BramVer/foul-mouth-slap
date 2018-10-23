@@ -3,9 +3,9 @@ Script to check the files in output of git status for foul words, variants of th
 
 ## Install
 
-1. Clone repository
-2. Update assets/foul-words if necessary
-3. Create pre-commit hook somewhere you can easily access
+1. Update assets/foul-words to your specific needs
+2. Create pre-commit hook somewhere you can easily access
+
 ```bash
 touch ~/.git-templates/hooks/pre-commit
 ```
