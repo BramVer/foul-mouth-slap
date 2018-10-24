@@ -6,22 +6,22 @@ Will not work on Windhose.
 
 1. Update assets/word_list.toml to your specific needs
 2. Create pre-commit hook somewhere you can easily access
-
 ```bash
-touch ~/.git-templates/hooks/pre-commit
+mkdir -p ~/.git-templates/hooks
+vim ~/.git-templates/hooks/pre-commit
 ```
-4. Call the script
+3. Call the script from inside the hook
 ```bash
 #!/bin/sh
 
 # Add other pre-commit hooks 
 python /PATH/TO/slapper.py
 ```
-5. Make hook executable
+4. Make hook executable
 ```bash
 sudo chmod u+x ~/.git-templates/hooks/pre-commit
 ```
-6. Set global rule in git to call this on commit in every repository
+5. Set global rule in git to call this on commit in every repository
 ```bash
 git config --global core.hooksPath ~/.git-templates/hooks/
 ```
