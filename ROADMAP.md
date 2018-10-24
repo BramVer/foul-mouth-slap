@@ -5,9 +5,9 @@
 - [x] construct a list of words i use when i have a foul-mouth
 - [x] set up some rules about other words
 - [x] detect variants of words
+- [x] Look only at the staged files 
+- [x] Look at the file names
+- [x] Allow extension of the list and overwriting depending on filetype
 
 ### TODO
-- [ ] Look only at the staged files 
-- [ ] Look at the file names
-- [ ] link to github links
-- [ ] write them permanently to list of foul-words.txt
+- [ ] Create a package with decent setup
