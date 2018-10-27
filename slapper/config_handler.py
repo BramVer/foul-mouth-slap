@@ -7,8 +7,6 @@ import os
 import sys
 import toml
 
-from log_handler import log_to_user
-
 
 def _get_absolute_path_for_script() -> str:
  '''Returns the absolute path for the script.
@@ -31,8 +29,8 @@ def _get_violations_as_dict() -> dict:
     absolute_path = _get_absolute_path_for_script()
     violations_dict = toml.load(os.path.abspath('%s/%s' % (absolute_path, relative_path)))
   except Exception as e:
-    log_to_user("Something went wrong while loading the violations dictionary.")
-    log_to_user(e)
+    print("Something went wrong while loading the violations dictionary.")
+    print(e)
 
   return violations_dict
 
@@ -78,7 +76,7 @@ def get_config() -> dict:
     os.path.abspath('%s/%s' % (absolute_path, relative_path))
     config_dict = toml.load(os.path.abspath('%s/%s' % (absolute_path, relative_path)))
   except Exception as e:
-    log_to_user("Something went wrong while loading the configuration.")
-    log_to_user(e)
+    print("Something went wrong while loading the configuration.")
+    print(e)
 
   return config_dict
