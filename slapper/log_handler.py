@@ -1,10 +1,12 @@
 '''Handles logging feedback to the user.'''
+from config_handler import get_config
 
 def _format_final_verdict(violations: list) -> list:
   '''Formats and returns all violations.'''
   output = []
+  foul_message = get_config().get('preferences', {}).get('foul_message')
 
-  output.append('😱😱😱😤😤 Foul words found 😤😤😱😱😱')
+  output.append(foul_message)
 
   for index, viol in enumerate(violations):
     output.append('%u: %s' % (index, viol.replace("\n", "")))

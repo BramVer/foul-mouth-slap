@@ -4,6 +4,7 @@ import sys
 
 from log_handler import log_to_user
 from log_handler import log_final_verdict
+from config_handler import get_config
 
 
 def _abort():
@@ -18,7 +19,8 @@ def _exit_gracefully():
 
 def exit_no_violations_found():
   '''Exits the script and continues the running process it halted.'''
-  log_to_user('No foul mouthed words found. 👌👌👌👏👏🙌🙌🙌        ')
+  clean_message = get_config().get('preferences', {}).get('clean_message')
+  log_to_user(clean_message)
   _exit_gracefully()
 
 def halt_and_wait_for_input(violations: list):
