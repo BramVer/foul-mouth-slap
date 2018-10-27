@@ -10,7 +10,8 @@ from log_handler import format_violation_report
 import config_handler as conf
 
 
-def _check_foul_words_match(line, foul_words):
+def _check_foul_words_match(line: str, foul_words: list) -> list:
+  '''Checks if the content contains one of the foul words.'''
   status = []
 
   for word in line:
@@ -19,7 +20,8 @@ def _check_foul_words_match(line, foul_words):
 
   return status
 
-def _check_foul_words_derivative(line, foul_words):
+def _check_foul_words_derivative(line: str, foul_words: list) -> list:
+  '''Checks if the content contains a derivative of one of the foul words.'''
   status = []
 
   for fword in foul_words:
@@ -28,7 +30,12 @@ def _check_foul_words_derivative(line, foul_words):
 
   return status
 
-def _check_foul_patterns(line, foul_patterns, acceptable_patterns):
+def _check_foul_patterns(line: str, foul_patterns: list, acceptable_patterns: list) -> list:
+  '''Checks if the content contains one of the foul patterns.
+
+  When a foul pattern is matched, the list of acceptable patterns
+  can overrule a match as a violation.
+  '''
   status = []
 
   for foul_pat in foul_patterns:
@@ -49,14 +56,14 @@ def _check_foul_patterns(line, foul_patterns, acceptable_patterns):
 
   return status
 
-def check_for_violations(type, content):
+def check_for_violations(type: str, content: list) -> list:
   """Loops content and checks for predetermined violations.
   
   Iterates the content by line and return an array.
   Each entry in the array will contain a string describing a specific violation.
   """
-
   violations = []
+
   foul_words = conf.get_foul_words_for_file_type(type)
   foul_patterns = conf.get_foul_patterns_for_file_type(type)
   acceptable_patterns = conf.get_acceptable_patterns_for_file_type(type)

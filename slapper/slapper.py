@@ -19,12 +19,12 @@ def main():
     file_type = io.get_file_type(file_name)
 
     appropriate_content = io.get_file_contents_to_evaluate(file_status, file_name)
-    evaluation_status = evaluator.check_for_violations(file_type, appropriate_content)
+    evaluation_report = evaluator.check_for_violations(file_type, appropriate_content)
 
-    if (len(evaluation_status) > 0):
+    if (len(evaluation_report) > 0):
       violations.append("\nFound in file\t%s" % file_name)
 
-    violations += evaluation_status
+    violations += evaluation_report
 
   if len(violations) > 0:
     halt_and_wait_for_input(violations)
