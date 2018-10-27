@@ -8,11 +8,11 @@
 - [x] Look only at the staged files 
 - [x] Look at the file names
 - [x] Allow extension of the list and overwriting depending on filetype
+- [x] Only check the content of staged files
+- [x] Cleanup io_handler
+- [x] Comment where needed
 
 ### TODO
-- [ ] Only check the content of staged files
-- [ ] Create a package with decent setup
 - [ ] Meaningful tests
-- [ ] Cleanup io_handler
-- [ ] Comment where needed
+- [ ] Create a package with decent setup
 - [ ] Persist logs where needed
