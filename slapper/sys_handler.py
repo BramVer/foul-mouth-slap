@@ -1,7 +1,9 @@
 '''Handles the system calls exiting/continuing/aborting the script.'''
 
 import sys
+
 from log_handler import log_to_user
+from log_handler import log_final_verdict
 
 
 def _abort():

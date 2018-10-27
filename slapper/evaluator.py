@@ -15,7 +15,7 @@ def _check_foul_words_match(line, foul_words):
 
   for word in line:
     if word in foul_words:
-      status.append(log.format_violation_report(word, line))
+      status.append(format_violation_report(word, line))
 
   return status
 
@@ -24,7 +24,7 @@ def _check_foul_words_derivative(line, foul_words):
 
   for fword in foul_words:
     if fuzz.partial_ratio(fword, line) > 90:
-      status.append(log.format_violation_report("Derivative of '%s'" % (fword), line))
+      status.append(format_violation_report("Derivative of '%s'" % (fword), line))
 
   return status
 
@@ -45,7 +45,7 @@ def _check_foul_patterns(line, foul_patterns, acceptable_patterns):
           overruled = True
 
       if not overruled:
-        status.append(log.format_violation_report("Pattern '%s'" % (foul_pat), line))
+        status.append(format_violation_report("Pattern '%s'" % (foul_pat), line))
 
   return status
 
