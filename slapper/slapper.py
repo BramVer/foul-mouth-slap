@@ -1,51 +1,35 @@
-#!/usr/bin/python
+'''Checks for foul words/patterns in staged files during commit.
 
+Executed as a git pre-commit, checks the content of staged files.
+'''
 import sys
 
 import evaluator
 import io_handler as io
+import git_handler as git
+
+from sys_handler import halt_and_wait_for_input
+from sys_handler import exit_no_violations_found
 
 def main():
-
   violations = []
-  affected_files = io.get_repository_status()
+  staged_files = git.get_staged_files_per_status()
 
-  for filename in affected_files.get('modified', []):
-    file_type = io.get_file_type(filename)
-    appropriate_content = io.get_modified_file_contents(filename)
+  for file_status, file_name in staged_files:
+    file_type = io.get_file_type(file_name)
 
+    appropriate_content = io.get_file_contents_to_evaluate(file_status, file_name)
     evaluation_status = evaluator.check_for_violations(file_type, appropriate_content)
+
     if (len(evaluation_status) > 0):
-      violations.append("\nFound in file\t%s" % filename)
+      violations.append("\nFound in file\t%s" % file_name)
 
     violations += evaluation_status
-
-  for filename in affected_files.get('new', []):
-    file_type = io.get_file_type(filename)
-    content = io.open_file_by_lines(filename)
-
-    evaluation_status = evaluator.check_for_violations(file_type, content)
-    if (len(evaluation_status) > 0):
-      violations.append("\nFound in file\t%s" % filename)
-
-    violations += evaluation_status
-
 
   if len(violations) > 0:
-    io.log_final_verdict(violations)
+    halt_and_wait_for_input(violations)
 
-    sys.stdin = open('/dev/tty')
-    answer = input('Commit anyway? [N/y] ')
-
-    if answer.strip().lower().startswith('y'):
-      print('Continued.')
-      sys.exit(0)
-
-    print('Aborting commit.')
-    sys.exit(1)
-
-  print('No foul mouthed words found. 👌👌👌👏👏🙌🙌🙌        ')
-  sys.exit(0)
+  exit_no_violations_found()
 
 if __name__ == '__main__':
   main()

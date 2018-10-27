@@ -19,7 +19,7 @@ python /PATH/TO/slapper.py
 ```
 4. Make hook executable
 ```bash
-sudo chmod u+x ~/.git-templates/hooks/pre-commit
+chmod u+x ~/.git-templates/hooks/pre-commit
 ```
 5. Set global rule in git to call this on commit in every repository
 ```bash

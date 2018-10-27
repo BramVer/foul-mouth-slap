@@ -10,4 +10,9 @@
 - [x] Allow extension of the list and overwriting depending on filetype
 
 ### TODO
+- [ ] Only check the content of staged files
 - [ ] Create a package with decent setup
+- [ ] Meaningful tests
+- [ ] Cleanup io_handler
+- [ ] Comment where needed
+- [ ] Persist logs where needed

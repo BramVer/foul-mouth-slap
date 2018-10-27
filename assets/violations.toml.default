@@ -1,0 +1,10 @@
+# Defines foul chars/words per file type and exceptions.
+title = "List of foul words/exceptions to the rule per file type"
+
+[all]
+  [all.foul]
+    words = []
+    patterns = []
+  [all.acceptable]
+    words = []
+    patterns = []

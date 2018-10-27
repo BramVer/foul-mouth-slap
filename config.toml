@@ -1,6 +1,0 @@
-[executable]
-  path_to_git_binary = "/usr/bin/git"
-  path_to_word_list = "/home/darm/DEV/foul-mouth-slap/assets/word_list.toml"
-
-[preferences]
-  strict_blocking = true
