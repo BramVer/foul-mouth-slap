@@ -2,6 +2,20 @@
 Script to check the diff content of files in output of git status for foul words, variants of those words and repeated chars.  
 Will not work on Windhose.
 
+## What in the seven hells is this and why would I need it?  
+
+Personally, I don't like to mess around with git history, so I try to keep the project history as readable and clean as I can.  
+Now, I'm also someone who likes to use the same non-sensical words to test stuff or during quick implementations:  
+**make it work, make it right, make it fast**.  
+The problem is I don't always catch everything before committing during *make it right*.  
+
+This is me not fighting my habits, rather giving into them.  
+So what if I keep writing `let dink = '';`? The hook will catch it and make me aware of it, asking for my consent to go ahead with the commit.  
+Now I can at least be aware when commiting sinful (so sinful) things into the repo's history.
+
+This implementation has been my holy grail for a while now, but it was in dire need of a rewrite, so I went ahead and *made it right*.......mostly.  
+There are still things left to do, obviously, but I'm much more happy with the solidity of the current iteration.
+
 ## Install
 
 1. Install requirements.txt
@@ -59,4 +73,13 @@ The same applies to patterns.
 ### Testing
 Tests are located in `slapper/tests` and require the [py.test](https://docs.pytest.org/en/latest/) module.  
 
-Just run `py.test` to go over everything.
+**Optional:** Create a virtual environment to test.
+```bash
+python -m virtualenv .venv
+source .venv/bin/activate
+```
+Navigate to the `slapper` directory and run the tests.
+```bash
+python -m pytest -v
+```
+Smile as you watch the tests pass.
