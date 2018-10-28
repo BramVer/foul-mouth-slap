@@ -14,45 +14,54 @@ def _check_foul_words_match(line: str, foul_words: list) -> list:
   '''Checks if the content contains one of the foul words.'''
   status = []
 
-  for word in line:
-    if word in foul_words:
-      status.append(format_violation_report(word, line))
+  for fword in foul_words:
+    if fword in line:
+      status.append(format_violation_report(fword, line))
 
   return status
 
 def _check_foul_words_derivative(line: str, foul_words: list) -> list:
-  '''Checks if the content contains a derivative of one of the foul words.'''
+  '''Checks if the content contains a  derivative of one of the foul words.
+
+  This checks for a certainty percentages using the Levenshtein algorithm.
+  '''
   status = []
 
   for fword in foul_words:
-    if fuzz.partial_ratio(fword, line) > 90:
-      status.append(format_violation_report("Derivative of '%s'" % (fword), line))
+    if fuzz.partial_ratio(fword, line) >= 70:
+      status.append(format_violation_report("Potential derivative of '%s'" % (fword), line))
 
   return status
 
 def _check_foul_patterns(line: str, foul_patterns: list, acceptable_patterns: list) -> list:
-  '''Checks if the content contains one of the foul patterns.
+  '''Checks if a word in the line contains one of the foul patterns.
 
   When a foul pattern is matched, the list of acceptable patterns
   can overrule a match as a violation.
+
+  Performance and accuracy note:
+  It would be much better to run the regexes on the entire line,
+  but that would mean the violations could not be overruled
+  due to missing context in matches.
   '''
   status = []
 
-  for foul_pat in foul_patterns:
-    regex = re.search(r'' + foul_pat, line, re.I)
-    hit = regex.group() if regex else None
+  for word in line.split():
+    for foul_pat in foul_patterns:
+      regex = re.search(r'' + foul_pat, word, re.I)
+      hit = regex.group() if regex else None
 
-    if hit:
-      overruled = False
+      if hit:
+        overruled = False
 
-      for accept_pat in acceptable_patterns:
-        regex = re.search(r'' + accept_pat, hit, re.I)
+        for accept_pat in acceptable_patterns:
+          regex = re.search(r'' + accept_pat, word, re.I)
 
-        if regex and regex.group():
-          overruled = True
+          if regex and regex.group():
+            overruled = True
 
-      if not overruled:
-        status.append(format_violation_report("Pattern '%s'" % (foul_pat), line))
+        if not overruled:
+          status.append(format_violation_report("Pattern '%s'" % (foul_pat), word))
 
   return status
 
