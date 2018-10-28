@@ -2,7 +2,7 @@
 
 Will return the user set preferences and list of words and patterns from assets.
 '''
-
+import re
 import os
 import sys
 import toml
@@ -15,9 +15,12 @@ def _get_absolute_path_for_script() -> str:
  the relative path changes with the repository it's in.
  This gets the path from the execution call.
  '''
- absolute_path = sys.argv[0][:-10]
+ absolute_path = sys.argv[0]    # Everything up until the file_name slapper.py
 
- return absolute_path
+ regex = re.search(r'.*foul-mouth-slap\/', absolute_path, re.MULTILINE | re.I)
+ match = regex.group() if regex else absolute_path
+
+ return match
 
 
 def _get_violations_as_dict() -> dict:
@@ -71,7 +74,7 @@ def get_config() -> dict:
   config_dict = {}
 
   try:
-    relative_path = '../config.toml'
+    relative_path = '/config.toml'
     absolute_path = _get_absolute_path_for_script()
     os.path.abspath('%s/%s' % (absolute_path, relative_path))
     config_dict = toml.load(os.path.abspath('%s/%s' % (absolute_path, relative_path)))
