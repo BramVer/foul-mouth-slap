@@ -4,6 +4,10 @@ from config_handler import get_config
 def _format_final_verdict(violations: list) -> list:
   '''Formats and returns all violations.'''
   output = []
+
+  if len(violations) == 0:
+    return output
+
   foul_message = get_config().get('preferences', {}).get('foul_message')
 
   output.append(foul_message)
