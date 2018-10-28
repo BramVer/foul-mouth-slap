@@ -29,11 +29,14 @@ def get_file_type(file_name: str) -> str:
 
   Executes a regex searching for everything after the last dot.
   If no match was found, the entire file_name is returned.
+  If a match was found, but the .group() is empty (=> 'file.'),
+  the original file_name is returned.
   '''
   regex = re.search(r'([^.]*$)', file_name, re.I)
   match = regex.group() if regex else file_name
 
-  return match
+  file_type = match or file_name
+  return file_type
 
 def _get_file_contents(file_name: str, locations: list) -> list:
   '''Opens file and returns the lines at the locations.
