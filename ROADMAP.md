@@ -11,8 +11,9 @@
 - [x] Only check the content of staged files
 - [x] Cleanup io_handler
 - [x] Comment where needed
+- [x] Meaningful tests
 
 ### TODO
-- [ ] Meaningful tests
 - [ ] Create a package with decent setup
 - [ ] Persist logs where needed
+- [ ] Set derivative percentage from config
