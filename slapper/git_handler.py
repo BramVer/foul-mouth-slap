@@ -10,7 +10,15 @@ from log_handler import log_to_user
 from config_handler import get_config
 
 
-def _categorize_staged_files(input: str) -> list:
+def _check_if_valid_staged_files_output(staged_files_output: str) -> bool:
+  '''Checks if the input complies with the known output format.'''
+  regex = re.search(r'^[ADRM]\ .*$', staged_files_output)
+  if regex and regex.group():
+    return True
+
+  return False
+
+def _categorize_staged_files(staged_files_output: str) -> list:
   '''Determines status of staged files based on the diff it receives.
 
   Return a list of tuples with ('STATUS', 'file_name').
@@ -19,11 +27,29 @@ def _categorize_staged_files(input: str) -> list:
   output = []
   status_dict = get_status_dict()
 
-  for line in input.splitlines():
-    file_status = status_dict.get(line[0], 'new')
-    output.append((file_status, line[2:]))     # Omits the status and spacedelimiter
+  for line in staged_files_output.splitlines():
+    if _check_if_valid_staged_files_output(line):
+      file_status = status_dict.get(line[0], 'new')
+      output.append((file_status, line[2:]))     # Omits the status and spacedelimiter
 
   return output
+
+def _get_diff_of_file(file_name: str) -> str:
+  '''Executes a git diff for the file against HEAD.'''
+  diff = ''
+  git_binary = get_config().get('executable').get('path_to_git_binary')
+
+  try:
+    diff = subprocess.check_output(
+        [git_binary, "diff", "--minimal", "--cached", file_name],
+        stderr=subprocess.STDOUT)
+    diff = diff.decode('utf-8')
+
+  except subprocess.CalledProcessError as cpe:
+    log_to_user("Something went wrong getting the diff against HEAD for file %s." % file_name)
+    log_to_user(cpe)
+
+  return diff
 
 
 def get_status_dict() -> dict:
@@ -57,23 +83,6 @@ def get_staged_files_per_status() -> list:
     log_to_user(cpe)
 
   return files_per_status
-
-def _get_diff_of_file(file_name: str) -> str:
-  '''Executes a git diff for the file against HEAD.'''
-  diff = ''
-  git_binary = get_config().get('executable').get('path_to_git_binary')
-
-  try:
-    diff = subprocess.check_output(
-        [git_binary, "diff", "--minimal", "--cached", file_name],
-        stderr=subprocess.STDOUT)
-    diff = diff.decode('utf-8')
-
-  except subprocess.CalledProcessError as cpe:
-    log_to_user("Something went wrong getting the diff against HEAD for file %s." % file_name)
-    log_to_user(cpe)
-
-  return diff
 
 def get_changed_locations_in_file(file_name) -> list:
   '''Regexes a diff to extract the extract location of changes.
