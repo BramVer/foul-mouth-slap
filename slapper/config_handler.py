@@ -61,7 +61,7 @@ def get_foul_words_for_file_type(file_type: str) -> dict:
 
 def get_acceptable_patterns_for_file_type(type: str) -> dict:
   '''Returns all acceptable patterns for the fyle type.'''
-  violations_dict = _get_violations_as_dict().get('foul_mouthed_blabber', {})
+  violations_dict = _get_violations_as_dict()
 
   all_acceptable_patterns = violations_dict.get('all', {}).get('acceptable', {}).get('patterns', [])
   type_acceptable_patterns = violations_dict.get(type, {}).get('acceptable', {}).get('patterns', [])
