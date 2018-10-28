@@ -44,6 +44,7 @@ chmod u+x ~/.git-templates/hooks/pre-commit
 ```
 
 6. Set global rule in git to call this on commit in every repository
+*Reminder: You could also set this per repository*
 ```bash
 git config --global core.hooksPath ~/.git-templates/hooks/
 ```
