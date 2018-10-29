@@ -8,7 +8,7 @@ import evaluator
 import io_handler as io
 import git_handler as git
 
-from sys_handler import halt_and_wait_for_input
+from sys_handler import handle_violations_and_exit
 from sys_handler import exit_no_violations_found
 
 def main():
@@ -27,7 +27,7 @@ def main():
     violations += evaluation_report
 
   if len(violations) > 0:
-    halt_and_wait_for_input(violations)
+    handle_violations_and_exit(violations)
 
   exit_no_violations_found()
 
