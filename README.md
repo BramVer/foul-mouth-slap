@@ -79,6 +79,10 @@ Tests are located in `slapper/tests` and require the [py.test](https://docs.pyte
 python -m virtualenv .venv
 source .venv/bin/activate
 ```
+Install pytest
+```bash
+pip install pytest
+```
 Navigate to the `slapper` directory and run the tests.
 ```bash
 python -m pytest -v
