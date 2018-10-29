@@ -33,6 +33,20 @@ def _check_foul_words_derivative(line: str, foul_words: list) -> list:
 
   return status
 
+def _does_regex_match_anything(regex: str, line: str) -> bool:
+  '''Checks if a regex pattern matches anything in the provided line.'''
+  is_match = False
+  result = re.search(r'' + regex, line, re.I)
+
+  if result and result.group():
+    is_match = True
+
+  return is_match
+
+def _is_foul_match_overruled(line :str, acceptable_patterns: list) -> bool:
+  '''Checks if the match can be overruled by iterating over available acceptable patterns.'''
+  return True in [_does_regex_match_anything(pattern, line) for pattern in acceptable_patterns]
+
 def _check_foul_patterns(line: str, foul_patterns: list, acceptable_patterns: list) -> list:
   '''Checks if a word in the line contains one of the foul patterns.
 
@@ -51,19 +65,11 @@ def _check_foul_patterns(line: str, foul_patterns: list, acceptable_patterns: li
       regex = re.search(r'' + foul_pat, word, re.I)
       hit = regex.group() if regex else None
 
-      if hit:
-        overruled = False
-
-        for accept_pat in acceptable_patterns:
-          regex = re.search(r'' + accept_pat, word, re.I)
-
-          if regex and regex.group():
-            overruled = True
-
-        if not overruled:
-          status.append(format_violation_report("Pattern '%s'" % (foul_pat), word))
+      if hit and not _is_foul_match_overruled(word, acceptable_patterns):
+        status.append(format_violation_report("Pattern '%s'" % (foul_pat), word))
 
   return status
+
 
 def check_for_violations(type: str, content: list) -> list:
   """Loops content and checks for predetermined violations.
@@ -78,16 +84,8 @@ def check_for_violations(type: str, content: list) -> list:
   acceptable_patterns = conf.get_acceptable_patterns_for_file_type(type)
 
   for line in content:
-    report = _check_foul_words_match(line, foul_words)
-    if (report != ""):
-      violations.extend(report)
-
-    report = _check_foul_words_derivative(line, foul_words)
-    if (report != ""):
-      violations.extend(report)
-
-    report = _check_foul_patterns(line, foul_patterns, acceptable_patterns)
-    if (report != ""):
-      violations.extend(report)
+    violations.extend(_check_foul_words_match(line, foul_words))
+    violations.extend(_check_foul_words_derivative(line, foul_words))
+    violations.extend(_check_foul_patterns(line, foul_patterns, acceptable_patterns))
 
   return violations    

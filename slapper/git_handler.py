@@ -37,7 +37,7 @@ def _categorize_staged_files(staged_files_output: str) -> list:
 def _get_diff_of_file(file_name: str) -> str:
   '''Executes a git diff for the file against HEAD.'''
   diff = ''
-  git_binary = get_config().get('executable').get('path_to_git_binary')
+  git_binary = get_config().get('executable', {}).get('path_to_git_binary')
 
   try:
     diff = subprocess.check_output(
