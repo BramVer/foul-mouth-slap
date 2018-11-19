@@ -12,7 +12,7 @@ from config_handler import get_config
 
 def _check_if_valid_staged_files_output(staged_files_output: str) -> bool:
   '''Checks if the input complies with the known output format.'''
-  regex = re.search(r'^[ADRM]\ .*$', staged_files_output)
+  regex = re.search(r'^[ADRM]*[\s].*\..*$', staged_files_output)
   if regex and regex.group():
     return True
 

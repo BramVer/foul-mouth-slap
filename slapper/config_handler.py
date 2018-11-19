@@ -15,7 +15,7 @@ def _get_absolute_path_for_script() -> str:
  the relative path changes with the repository it's in.
  This gets the path from the execution call.
  '''
- absolute_path = sys.argv[0]    # Everything up until the file_name slapper.py
+ absolute_path = os.path.dirname(os.path.abspath(__file__))   # Everything up until the file_name slapper.py
 
  regex = re.search(r'.*foul-mouth-slap\/', absolute_path, re.MULTILINE | re.I)
  match = regex.group() if regex else absolute_path
