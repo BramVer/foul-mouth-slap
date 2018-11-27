@@ -1,4 +1,6 @@
 # foul-mouth-slap
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap?ref=badge_shield)  
+
 Script to check the diff content of files in output of git status for foul words, variants of those words and repeated chars.  
 Will not work on Windhose.
 
