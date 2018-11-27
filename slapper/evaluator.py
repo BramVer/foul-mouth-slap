@@ -26,9 +26,10 @@ def _check_foul_words_derivative(line: str, foul_words: list) -> list:
   This checks for a certainty percentages using the Levenshtein algorithm.
   '''
   status = []
+  foul_word_tolerance = conf.get_foul_word_fuzzy_match_ratio()
 
   for fword in foul_words:
-    if fuzz.partial_ratio(fword, line) >= 70:
+    if fuzz.partial_ratio(fword, line) >= foul_word_tolerance:
       status.append(format_violation_report("Potential derivative of '%s'" % (fword), line))
 
   return status

@@ -83,3 +83,8 @@ def get_config() -> dict:
     print(e)
 
   return config_dict
+
+
+def get_foul_word_fuzzy_match_ratio() -> int:
+  '''Returns the tolerance of the fuzzy matches for foul words.'''
+  return get_config().get('preferences', {}).get('fuzzy_match_ratio', 69)
