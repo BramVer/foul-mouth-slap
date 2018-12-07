@@ -1,5 +1,5 @@
 # foul-mouth-slap
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap?ref=badge_shield)  
 
 Script to check the diff content of files in output of git status for foul words, variants of those words and repeated chars.  
 Will not work on Windhose.
@@ -9,14 +9,12 @@ Will not work on Windhose.
 Personally, I don't like to mess around with git history, so I try to keep the project history as readable and clean as I can.  
 Now, I'm also someone who likes to use the same non-sensical words to test stuff or during quick implementations:  
 **make it work, make it right, make it fast**.  
-The problem is I don't always catch everything before committing during *make it right*.  
+The problem is I don't always catch everything before committing stuff when I *make it right*.  
 
-This is me not fighting my habits, rather giving into them.  
-So what if I keep writing `let dink = '';`? The hook will catch it and make me aware of it, asking for my consent to go ahead with the commit.  
-Now I can at least be aware when commiting sinful (so sinful) things into the repo's history.
-
-This implementation has been my holy grail for a while now, but it was in dire need of a rewrite, so I went ahead and *made it right*.......mostly.  
-There are still things left to do, obviously, but I'm much more happy with the solidity of the current iteration.
+This is me accepting I have bad habits, and working around them.  
+*So what if I write `let dink = '';`?*  
+The hook will catch this and make me aware of it, giving me the option to either stop the commit or to go ahead and push it into the repository's history.  
+Now I can at least be aware when commiting sinful (oh so sinful) things into the repo's history.
 
 ## Install
 

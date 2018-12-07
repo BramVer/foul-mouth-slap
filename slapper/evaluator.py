@@ -26,9 +26,10 @@ def _check_foul_words_derivative(line: str, foul_words: list) -> list:
   This checks for a certainty percentages using the Levenshtein algorithm.
   '''
   status = []
+  foul_word_tolerance = conf.get_foul_word_fuzzy_match_ratio()
 
   for fword in foul_words:
-    if fuzz.partial_ratio(fword, line) >= 70:
+    if fuzz.partial_ratio(fword, line) >= foul_word_tolerance:
       status.append(format_violation_report("Potential derivative of '%s'" % (fword), line))
 
   return status
@@ -78,6 +79,7 @@ def check_for_violations(type: str, content: list) -> list:
   Each entry in the array will contain a string describing a specific violation.
   """
   violations = []
+  is_fuzzy_matching_turned_on = conf.get_is_fuzzy_matching_turned_on()
 
   foul_words = conf.get_foul_words_for_file_type(type)
   foul_patterns = conf.get_foul_patterns_for_file_type(type)
@@ -85,7 +87,9 @@ def check_for_violations(type: str, content: list) -> list:
 
   for line in content:
     violations.extend(_check_foul_words_match(line, foul_words))
-    violations.extend(_check_foul_words_derivative(line, foul_words))
     violations.extend(_check_foul_patterns(line, foul_patterns, acceptable_patterns))
+
+    if is_fuzzy_matching_turned_on:
+      violations.extend(_check_foul_words_derivative(line, foul_words))
 
   return violations    
