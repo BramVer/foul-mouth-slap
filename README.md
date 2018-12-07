@@ -54,7 +54,7 @@ The rules for __all__ will be used as baseline.
 Different words and patterns (= basic regex) can be added to specific file extension identifiers, to overwrite the eventual result.  
 `foul` sections will be appended to the list of violations, while `acceptable` sections will remove them from the list.
 
-**Note:** The regex patterns are provided as strings, remember to **escape** characters where needed.
+**Note:** The regex patterns are provided as literal strings; no need to escape them.
 
 #### Example: Given the following structure:
 ```toml
@@ -65,14 +65,14 @@ Different words and patterns (= basic regex) can be added to specific file exten
       "poop",
     ]
     patterns = [
-      "([a-zA-Z])\\1{3,}"
+      '([a-zA-Z])\\1{3,}'
     ]
 [css]
   [css.foul]
     words = ["test"]
   [css.acceptable]
     words = ["poop"]
-    patterns = ["#[a-zA-Z0-9]*"]
+    patterns = ['#[a-zA-Z0-9]*']
 
 ```
 The resulting foul_words for `.css` files will be `dink, test`, all other files will have `dink, poop` as foul_words.  
