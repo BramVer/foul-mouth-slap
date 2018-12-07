@@ -79,6 +79,7 @@ def check_for_violations(type: str, content: list) -> list:
   Each entry in the array will contain a string describing a specific violation.
   """
   violations = []
+  is_fuzzy_matching_turned_on = conf.get_is_fuzzy_matching_turned_on()
 
   foul_words = conf.get_foul_words_for_file_type(type)
   foul_patterns = conf.get_foul_patterns_for_file_type(type)
@@ -86,7 +87,9 @@ def check_for_violations(type: str, content: list) -> list:
 
   for line in content:
     violations.extend(_check_foul_words_match(line, foul_words))
-    violations.extend(_check_foul_words_derivative(line, foul_words))
     violations.extend(_check_foul_patterns(line, foul_patterns, acceptable_patterns))
+
+    if is_fuzzy_matching_turned_on:
+      violations.extend(_check_foul_words_derivative(line, foul_words))
 
   return violations    

@@ -3,6 +3,7 @@
   path_to_word_list = "../assets/violations.toml"
 
 [preferences]
+  fuzzy_matching = true
   fuzzy_match_ratio = 75
   clean_message = "No foul mouthed words found. 👌👌👌👏👏🙌🙌🙌        "
   foul_message = "😱😱😱😤😤 Foul words found 😤😤😱😱😱"
