@@ -88,3 +88,7 @@ Navigate to the `slapper` directory and run the tests.
 python -m pytest -v
 ```
 Smile as you watch the tests pass.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FBramVer%2Ffoul-mouth-slap?ref=badge_large)
