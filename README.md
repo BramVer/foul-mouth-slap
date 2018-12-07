@@ -51,8 +51,10 @@ git config --global core.hooksPath ~/.git-templates/hooks/
 
 ### Adding custom rules
 The rules for __all__ will be used as baseline.  
-Different (basic regex) patterns/words can be added to specific file extension identifiers, to overwrite the eventual result.  
-`foul` sections will be appended, while `acceptable` sections will omit existing checks.
+Different words and patterns (= basic regex) can be added to specific file extension identifiers, to overwrite the eventual result.  
+`foul` sections will be appended to the list of violations, while `acceptable` sections will remove them from the list.
+
+**Note:** The regex patterns are provided as strings, remember to **escape** characters where needed.
 
 #### Example: Given the following structure:
 ```toml
@@ -62,14 +64,23 @@ Different (basic regex) patterns/words can be added to specific file extension i
       "dink",
       "poop",
     ]
+    patterns = [
+      "([a-zA-Z])\\1{3,}"
+    ]
 [css]
   [css.foul]
     words = ["test"]
   [css.acceptable]
     words = ["poop"]
+    patterns = ["#[a-zA-Z0-9]*"]
+
 ```
-The resulting foul_words will be `dink, test`.  
-The same applies to patterns.
+The resulting foul_words for `.css` files will be `dink, test`, all other files will have `dink, poop` as foul_words.  
+
+For patterns it's a bit trickier: the first (= foul) pattern makes sure we don't repeat the same textcharacter more than 3 times.  
+The second one allows character repetitions when they are preceded by a `#` character in a `.css` file.  
+This results in a situation where `.py` files cannot contain the following text: `# aaaaAAAaa` but `.css` files can,
+because the violation is overruled by the acceptable pattern.
 
 ### Testing
 Tests are located in `slapper/tests` and require the [py.test](https://docs.pytest.org/en/latest/) module.  
