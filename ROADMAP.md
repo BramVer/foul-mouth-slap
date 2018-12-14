@@ -1,7 +1,10 @@
-# ROADMAP foul-mouth-slap
+# ROADMAP
+
+### TODO
+- [ ] Create a package with decent setup
+- [ ] Persist logs where needed
 
 ### DONE
-- [x] read all files
 - [x] construct a list of words i use when i have a foul-mouth
 - [x] set up some rules about other words
 - [x] detect variants of words
@@ -12,8 +15,5 @@
 - [x] Cleanup io_handler
 - [x] Comment where needed
 - [x] Meaningful tests
-
-### TODO
-- [ ] Create a package with decent setup
-- [ ] Persist logs where needed
-- [ ] Set derivative percentage from config
+- [x] Set derivative percentage from config
+- [x] Make derivative matching opt-in
